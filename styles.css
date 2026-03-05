@@ -113,7 +113,6 @@ body {
     width: 4px;
     height: 44px;
     background-color: #ffffff;
-    border-radius: 0 4px 4px 0;
     transition: transform 0.3s ease;
     z-index: 0;
     top: 0;
@@ -139,4 +138,12 @@ body {
 
 .menu:hover .chapter:nth-child(5):hover ~ .active-indicator {
     transform: translateY(184px);
+}
+
+.menu:hover .chapter:nth-child(6):hover ~ .active-indicator {
+    transform: translateY(230px);
+}
+
+.menu:hover .chapter:nth-child(7):hover ~ .active-indicator {
+    transform: translateY(276px);
 }
