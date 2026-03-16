@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoundCloud</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!--Шапка сайта-->
+    <header class="header">
+        <button id="burger">☰</button>
+        <div class="search-wrapper">
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            <input class="search-header" type="text" placeholder="Search">
+        </div>
+    </header>
+
+    <!--Боковая панель-->
+    <div id="sidebar" class="sidebar closed">
+        <div class="logo">
+            SoundCloud
+            <i class="fa-brands fa-soundcloud"></i>
+        </div>
+        <!--Меню Sidebar-->
+        <div class="menu">
+            <a class="chapter" href="#">Заметки</a>
+            <a class="chapter" href="#">Корзина</a>
+            <a class="chapter" href="#">Настройки</a>
+            <a class="chapter" href="#">Справка</a>
+            <div class="active_indicator"></div>
+        </div>
+    </div>
+    <!--Основной контент-->
+    <div class="main-content">
+        <h1>Welcome to SoundNotes</h1>
+        <p>Your notes</p>
+    </div>
+    <!--Карточки заметок-->
+    <div class="notes-creator">
+        <!--Заметка свернута-->
+        <div class="note-collapsed">
+            <input type="text" placeholder="Заметка...">
+        </div>
+        <!--Заметка развернута-->
+        <div class="note-expanded">
+            <input class="note-title" type="text" placeholder="Название">
+            <textarea placeholder="Заметка..."></textarea>
+        </div>
+        <!--Действия с заметкой-->
+        <div class="note-actions">
+            <button>Закрыть</button>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>
