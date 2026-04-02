@@ -3,33 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Soundcloud</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Lorem</title>
 </head>
 <body>
-    <!-- Боковая панель -->
-    <div class="sidebar">
+    <!--Шапка-->
+    <div class="header">
+        <!--Лого-->
         <div class="logo">
-            Soundcloud
-            <i class="fa-brands fa-soundcloud"></i>
+            <i class="fa-solid fa-lightbulb"></i>
+            Lorem
         </div>
-        <!-- Поле ввода -->
-        <div class="search-wrapper">
-            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+        <!--Поиск-->
+        <div class="search">
+            <i class="fa-solid fa-magnifying-glass"></i>
             <input class="search-input" type="text" placeholder="Search">
         </div>
-        
-        <div class="menu">
-            <a class="chapter" href="#">Discover</a>
-            <a class="chapter" href="#">Tending</a>
-            <a class="chapter" href="#">Album</a>
-            <a class="chapter" href="#">Playlist</a>
-            <a class="chapter" href="#">Favorites</a>
-            <a class="chapter" href="#">Profile</a>
-            <a class="chapter" href="#">Settings</a>
-            <div class="active-indicator"></div>
-        </div>
+                
     </div>
-</body>
+    <!--Боковая панель-->
+    <div class="sidebar">
+        <!--Разделы-->
+        <ul>
+            <li><i class="fa-solid fa-lightbulb"></i><a class="chapter" href="#">Notes</a></li>
+            <li><i class="fa-solid fa-trash"></i><a class="chapter" href="#">Bin</a></li>
+            <li><i class="fa-solid fa-circle-user"></i><a class="chapter" href="#">Profile</a></li>
+            <li><i class="fa-solid fa-gear"></i><a class="chapter" href="#">Settings</a></li>
+        </ul>
+    </div>
+    <!--Карточка заметки-->
+    <div class="note-head">
+        <div class="title-area">
+            <input type="text" class="title-input" placeholder="Title">
+        </div>
+        <button class="close-btn"></button>
+        <div class="note-subhead">
+            <input class="subhead-input" type="text" placeholder="Note...">
+        </div>
+        <div class="note-body">
+            <div class="toolbar">
+                <button class="tool-btn" title="Header 1" onclick="formatDoc('formatblock', 'h1')">H1</button>
+                <button class="tool-btn" title="Header 2" onclick="formatDoc('formatblock', 'h2')">H2</button>
+                <button class="tool-btn" title="Default" onclick="formatDoc('formatblock', 'p')">Aa</button>
+                <span class="separator"></span>
+                <button class="tool-btn" title="Bold" onclick="formatDoc('bold')"><b>B</b></button>
+                <button class="tool-btn" title="Italic" onclick="formatDoc('italic')"><i>I</i></button>
+                <button class="tool-btn" title="Underline" onclick="formatDoc('underline')"><u>U</u></button>
+                <span class="separator"></span>
+                <button class="tool-btn" title="Unordered List" onclick="formatDoc('insertUnorderedList')">•</button>
+                <button class="tool-btn" title="Ordered List" onclick="formatDoc('insertOrderedList')">1.</button>
+                <span class="separator"></span>
+                <button class="tool-btn" title="Clear Format" onclick="formatDoc('removeFormat')">✖</button>
+            </div>
+        </div>
+
+    </div>
+    </body>
 </html>

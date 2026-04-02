@@ -1,0 +1,340 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
+
+body {
+    background-color: #3a3a3a;
+    min-height: 100vh;
+}
+
+/* Шапка */
+.header {
+    background-color: #4f4f4f;
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+/* Логотип */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: white;
+}
+
+.logo i {
+    color: #ffffff;
+    font-size: 1.8rem;
+}
+
+/* Поиск */
+.search {
+    display: flex;
+    align-items: center;
+    background-color: #3a3a3a;
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    flex: 1;
+    max-width: 600px;
+}
+
+.search i {
+    color: #ddd;
+    margin-right: 0.5rem;
+}
+
+.search-input {
+    border: none;
+    background: none;
+    outline: none;
+    width: 100%;
+    font-size: 1rem;
+    color: white;
+}
+
+.search-input::placeholder {
+    color: #aaa;
+}
+
+/* Боковая панель */
+.sidebar {
+    background-color: #4f4f4f;
+    width: 250px;
+    position: fixed;
+    left: 0;
+    top: 93px;
+    box-shadow: 2px 0 4px rgba(0, 0, 0, 0.2);
+    padding: 1rem 0;
+    border-radius: 12px;
+    overflow-y: auto;
+    height: auto;
+    max-height: calc(100vh - 125px);
+}
+
+.sidebar ul {
+    list-style: none;
+}
+
+.sidebar li {
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: white;
+    font-weight: bold;
+    position: relative;
+}
+
+.sidebar li:hover {
+    background-color: #3a3a3a;
+}
+
+.sidebar li.active {
+    background-color: #3a3a3a;
+    border-left: 3px solid #ffffff;
+}
+
+.sidebar li i {
+    width: 20px;
+    color: #ffffff;
+}
+
+.chapter {
+    text-decoration: none;
+    color: white;
+    font-size: 1rem;
+}
+
+/* Карточка заметки */
+.note-head {
+    background-color: #4f4f4f;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    margin-left: 270px;
+    margin-top: 93px;
+    margin-right: 2rem;
+    margin-bottom: 2rem;
+    padding: 2rem;
+    max-width: calc(100% - 294px);
+}
+
+/* Область заголовка */
+.title-area {
+    margin-bottom: 1.5rem;
+}
+
+.title-input {
+    width: 100%;
+    border: none;
+    outline: none;
+    font-size: 2rem;
+    font-weight: 600;
+    color: white;
+    background-color: transparent;
+    padding: 0.5rem 0;
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.2s;
+}
+
+.title-input:focus {
+    border-bottom-color: #ffffff;
+}
+
+.title-input::placeholder {
+    color: #aaa;
+}
+
+/* Кнопка закрытия */
+.close-btn {
+    position: relative;
+    float: right;
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    opacity: 0.5;
+    transition: opacity 0.2s;
+}
+
+.close-btn:hover {
+    opacity: 1;
+}
+
+.close-btn::before,
+.close-btn::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 2px;
+    background-color: white;
+}
+
+.close-btn::before {
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.close-btn::after {
+    transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+/* Подзаголовок */
+.note-subhead {
+    margin-bottom: 2rem;
+    clear: both;
+}
+
+.subhead-input {
+    width: 100%;
+    border: none;
+    outline: none;
+    font-size: 1.1rem;
+    color: #ddd;
+    background-color: transparent;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #666;
+}
+
+.subhead-input:focus {
+    border-bottom-color: #ffffff;
+}
+
+.subhead-input::placeholder {
+    color: #888;
+}
+
+/* Панель инструментов */
+.note-body {
+    border: 1px solid #666;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.toolbar {
+    background-color: #3a3a3a;
+    padding: 0.5rem;
+    border-bottom: 1px solid #666;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+}
+
+.tool-btn {
+    background: none;
+    border: none;
+    padding: 0.5rem 0.75rem;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 1rem;
+    color: white;
+    transition: all 0.2s;
+    min-width: 36px;
+}
+
+.tool-btn:hover {
+    background-color: #4f4f4f;
+}
+
+.tool-btn:active {
+    background-color: #555;
+}
+
+.separator {
+    width: 1px;
+    height: 24px;
+    background-color: #666;
+    margin: 0 0.25rem;
+    display: inline-block;
+}
+
+/* Область для контента заметки */
+.note-content {
+    background-color: #4f4f4f;
+    min-height: 300px;
+    padding: 1rem;
+    outline: none;
+    overflow-y: auto;
+    color: white;
+}
+
+[contenteditable="true"]:empty:before {
+    content: attr(placeholder);
+    color: #888;
+}
+
+/* Стили для форматированного текста */
+[contenteditable="true"] h1 {
+    font-size: 2em;
+    margin: 0.67em 0;
+    color: white;
+}
+
+[contenteditable="true"] h2 {
+    font-size: 1.5em;
+    margin: 0.75em 0;
+    color: white;
+}
+
+[contenteditable="true"] ul, 
+[contenteditable="true"] ol {
+    padding-left: 2em;
+    margin: 0.5em 0;
+    color: white;
+}
+
+[contenteditable="true"] p {
+    margin: 0.5em 0;
+    color: white;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s;
+        border-radius: 12px;
+        top: 93px;
+        max-height: calc(100vh - 125px);
+    }
+    
+    .sidebar.open {
+        transform: translateX(0);
+    }
+    
+    .note-head {
+        margin-left: 1rem;
+        margin-right: 1rem;
+        max-width: calc(100% - 2rem);
+    }
+    
+    .header {
+        padding: 1rem;
+    }
+    
+    .logo {
+        font-size: 1.2rem;
+    }
+    
+    .logo i {
+        font-size: 1.4rem;
+    }
+}
