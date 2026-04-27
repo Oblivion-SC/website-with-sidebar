@@ -207,6 +207,8 @@ body{
     margin-bottom: 10px;
     outline: none;
     background-color: #2a2a2a;
+    color: white;
+    font-weight: bolder;
 }
 
 .note-expanded input::placeholder {
@@ -219,6 +221,7 @@ body{
     outline: none;
     font-size: 15px;
     background-color: #2a2a2a;
+    color: white;
 }
 
 .note-expanded textarea::placeholder {
@@ -229,4 +232,108 @@ body{
     display: flex;
     justify-content: flex-end;
     margin-top: 10px;
+    
+}
+
+/*Кнопки "Добавить" "Закрыть" карточку*/
+.note-actions button {
+    border: none;
+    padding: 6px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+/* Добавить */
+#addNote {
+    background: #ff5500;
+    color: white;
+}
+
+#addNote:hover {
+    background: #ff6a1a;
+}
+
+/* Закрыть */
+#closeNote {
+    background: transparent;
+    color: #aaa;
+}
+
+#closeNote:hover {
+    color: white;
+}
+
+/*Кнопка "Удалить"*/
+.delete-btn {
+    margin-top: 10px;
+    background: transparent;
+    border: none;
+    color: #888;
+    cursor: pointer;
+    font-size: 13px;
+    text-align: right;
+}
+
+.delete-btn:hover {
+    color: #ff5555;
+}
+
+/*Сетка заметок*/
+.notes-container {
+    max-width: 900px;
+    margin: 40px auto;
+}
+
+.notes-grid {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 15px;
+}
+
+.note-card {
+    background: #2a2a2a;
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.note-card:hover {
+    transform: translateY(-3px);
+}
+
+.note-card h3 {
+    margin-bottom: 8px;
+}
+
+/*Экран корзины*/
+.restore-btn {
+    margin-top: 8px;
+    background: transparent;
+    border: none;
+    color: #4caf50;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.restore-btn:hover {
+    color: #66ff88;
+}
+
+.delete-forever-btn {
+    margin-top: 5px;
+    background: transparent;
+    border: none;
+    color: #ff5555;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.delete-forever-btn:hover {
+    color: #ff2222;
 }

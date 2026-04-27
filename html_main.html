@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body>
+<div>
     <!--Шапка сайта-->
     <header class="header">
         <button id="burger">☰</button>
@@ -26,7 +26,7 @@
         <!--Меню Sidebar-->
         <div class="menu">
             <a class="chapter" href="#">Заметки</a>
-            <a class="chapter" href="#">Корзина</a>
+            <a class="chapter" href="#" id="trashBtn">Корзина</a>
             <a class="chapter" href="#">Настройки</a>
             <a class="chapter" href="#">Справка</a>
             <div class="active_indicator"></div>
@@ -37,22 +37,43 @@
         <h1>Welcome to SoundNotes</h1>
         <p>Your notes</p>
     </div>
-    <!--Карточки заметок-->
-    <div class="notes-creator">
-        <!--Заметка свернута-->
-        <div class="note-collapsed">
-            <input type="text" placeholder="Заметка...">
+    
+    <div class="content-wrapper">
+    <!-- ГЛАВНЫЙ ЭКРАН -->
+    <div id="notesScreen">
+
+        <!--Карточки заметок-->
+        <div class="notes-container">
+            <div class="notes-creator">
+                <div class="note-collapsed">
+                    <input type="text" placeholder="Заметка..." id="collapsedInput">
+                </div>
+
+                <div class="note-expanded" id="expandedNote">
+                    <input class="note-title" type="text" placeholder="Название" id="noteTitle">
+                    <textarea placeholder="Заметка..." id="noteText"></textarea>
+
+                    <div class="note-actions">
+                        <button id="addNote">Добавить</button>
+                        <button id="closeNote">Закрыть</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Сетка заметок -->
+            <div class="notes-grid" id="notesGrid"></div>
         </div>
-        <!--Заметка развернута-->
-        <div class="note-expanded">
-            <input class="note-title" type="text" placeholder="Название">
-            <textarea placeholder="Заметка..."></textarea>
-        </div>
-        <!--Действия с заметкой-->
-        <div class="note-actions">
-            <button>Закрыть</button>
+
+    </div>
+
+    <!-- ЭКРАН КОРЗИНЫ -->
+    <div id="trashScreen" style="display:none;">
+        <div class="notes-container">
+            <div class="notes-grid" id="trashGrid"></div>
         </div>
     </div>
+
+</div>
 
     <script src="main.js"></script>
 </body>
