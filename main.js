@@ -26,6 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const textInput = document.getElementById("noteText");
 
     const notesGrid = document.getElementById("notesGrid");
+    
 
     // Открытие
     collapsed.addEventListener("click", () => {
