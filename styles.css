@@ -337,3 +337,20 @@ body{
 .delete-forever-btn:hover {
     color: #ff2222;
 }
+
+/*"Нет заметок" и "Корзина пуста"*/
+.empty-state {
+    color: #888;
+    text-align: center;
+    grid-column: 1 / -1;
+    margin-top: 40px;
+    font-size: 16px;
+}
+
+/*Подсветка найденного*/
+.highlight {
+    background-color: #ff5500;
+    color: white;
+    padding: 1px 3px;
+    border-radius: 3px;
+}

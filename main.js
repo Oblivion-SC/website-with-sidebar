@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const trashScreen = document.getElementById("trashScreen");
 
     const trashBtn = document.getElementById("trashBtn");
-    const notesBtn = document.querySelector(".chapter"); // "Заметки"
+    const notesBtn = document.getElementById("notesBtn"); // "Заметки"
 
     const collapsed = document.querySelector(".note-collapsed");
     const expanded = document.getElementById("expandedNote");
@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const textInput = document.getElementById("noteText");
 
     const notesGrid = document.getElementById("notesGrid");
-    
+    const searchInput = document.getElementById("searchInput");
 
     // Открытие
     collapsed.addEventListener("click", () => {
@@ -65,16 +65,62 @@ document.addEventListener("DOMContentLoaded", () => {
         collapsed.style.display = "block";
     });
 
-    function renderNotes() {
+    //Поиск
+    const handleSearch = debounce((value) => {
+        renderNotes(value);
+    }, 300);
+
+    searchInput.addEventListener("input", (e) => {
+        const value = e.target.value;
+        handleSearch(value);
+
+        localStorage.setItem("search", value);
+    });
+
+    function debounce(func, delay) {
+        let timeout;
+        return function (...args) {
+            clearTimeout(timeout);
+            timeout = setTimeout(() => func.apply(this, args), delay);
+        };
+    }
+
+    function escapeRegExp(string) {
+        return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }
+
+    function highlightText(text, query) {
+        if (!query) return text;
+
+        const safeQuery = escapeRegExp(query);
+
+        const regex = new RegExp(`(${query})`, "gi");
+        return text.replace(regex, `<span class="highlight">$1</span>`);
+    }
+
+    function renderNotes(filter = "") {
         notesGrid.innerHTML = "";
 
-        notes.forEach(note => {
+        const filtered = notes.filter(note => {
+            const text = (note.title + " " + note.text).toLowerCase();
+            return text.includes(filter.toLowerCase());
+        });
+
+        //Нет заметок
+        if (filtered.length === 0) {
+            notesGrid.innerHTML = `
+                <p class="empty-state">Нет заметок</p>
+            `;
+            return;
+        }
+
+        filtered.forEach(note => {
             const el = document.createElement("div");
             el.classList.add("note-card");
 
             el.innerHTML = `
-                <h3>${note.title || "Без названия"}</h3>
-                <p>${note.text}</p>
+                <h3>${highlightText(note.title || "Без названия", filter)}</h3>
+                <p>${highlightText(note.text, filter)}</p>
                 <button class="delete-btn" data-id="${note.id}">Удалить</button>
             `;
 
@@ -104,6 +150,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function renderTrash() {
         trashGrid.innerHTML = "";
+
+        //Корзина пуста
+        if (trash.length === 0) {
+            trashGrid.innerHTML = `
+                <p class="empty-state">Корзина пуста</p>
+            `;
+            return;
+        }
 
         trash.forEach(note => {
             const el = document.createElement("div");
@@ -162,6 +216,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function saveToStorage() {
         localStorage.setItem("notes", JSON.stringify(notes));
         localStorage.setItem("trash", JSON.stringify(trash));
+        localStorage.setItem("search", searchInput.value);
     }
 
     function loadFromStorage() {
@@ -175,6 +230,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     loadFromStorage();
-    renderNotes();
+
+    const savedSearch = localStorage.getItem("search") || "";
+    searchInput.value = savedSearch;
+    
+    renderNotes(savedSearch);
     renderTrash();
 });
