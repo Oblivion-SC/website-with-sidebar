@@ -1,5 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
-    
+    const isAuth = localStorage.getItem("isAuth");
+
+    if (!isAuth) {
+        window.location.href = "auth.html";
+    }
+
     //Закрытие и открытие бургер-меню
     const burger = document.getElementById("burger");
     const sidebar = document.getElementById("sidebar");
@@ -41,13 +46,68 @@ document.addEventListener("DOMContentLoaded", () => {
     let pendingDeleteId = null;
     let draggedNoteId = null;
 
-    // Открытие
+    //Авторизация
+    const logoutBtn = document.getElementById("logoutBtn");
+
+    logoutBtn.addEventListener("click", () => {
+
+        localStorage.removeItem("isAuth");
+
+        window.location.href = "auth.html";
+    });
+
+    //Профиль
+    const profileWrapper = document.querySelector(".profile-wrapper");
+    const profileBtn = document.getElementById("profileBtn");
+    const profileDropdown = document.getElementById("profileDropdown");
+    const profileEmail = document.getElementById("profileEmail");
+    const openTrashBtn = document.getElementById("openTrashBtn");
+    const savedUser = JSON.parse(localStorage.getItem("user"));
+
+    if (savedUser) {
+
+        // email
+        profileEmail.textContent = savedUser.email;
+
+        // первая буква
+        profileLetter.textContent =
+            savedUser.email[0].toUpperCase();
+    }
+
+    //Открытие / закрытие профиля
+    profileBtn.addEventListener("click", () => {
+        profileDropdown.classList.toggle("hidden");
+    });
+
+    //Закрытие профиля при клике вне меню
+    document.addEventListener("click", (e) => {
+
+        if (
+            !profileWrapper.contains(e.target)
+        ) {
+            profileDropdown.classList.add("hidden");
+        }
+
+    });
+
+    //Кнопка корзины в профиле
+    openTrashBtn.addEventListener("click", () => {
+
+        notesScreen.style.display = "none";
+        trashScreen.style.display = "block";
+
+        renderTrash();
+
+        profileDropdown.classList.add("hidden");
+    });
+
+    // Открытие карточки заметки
     collapsed.addEventListener("click", () => {
         collapsed.style.display = "none";
         expanded.style.display = "flex";
     });
 
-    // Закрытие
+    // Закрытие карточки заметки
     closeBtn.addEventListener("click", () => {
         expanded.style.display = "none";
         collapsed.style.display = "block";
@@ -223,7 +283,7 @@ document.addEventListener("DOMContentLoaded", () => {
         renderNotes();
     }
 
-    // удаление → в корзину
+    // удаление в корзину
     notesGrid.addEventListener("click", (e) => {
         if (e.target.classList.contains("delete-btn")) {
 

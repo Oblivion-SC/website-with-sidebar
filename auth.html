@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Авторизация в Notes</title>
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="dark-theme">
+
+    <div class="auth-container">
+
+        <div class="auth-card">
+
+            <h1>Notes</h1>
+
+            <div class="auth-tabs">
+                <button id="loginTab" class="active-tab">Вход</button>
+                <button id="registerTab">Регистрация</button>
+            </div>
+
+            <input type="email" id="emailInput" placeholder="Email">
+
+            <input type="password" id="passwordInput" placeholder="Пароль">
+
+            <button id="authBtn">Войти</button>
+
+            <p id="authMessage"></p>
+
+        </div>
+
+    </div>
+
+    <script src="auth.js"></script>
+
+</body>
+</html>

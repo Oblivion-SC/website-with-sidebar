@@ -166,6 +166,7 @@ body{
 .main-content {
     flex: 1;
     padding: 20px;
+    text-align: center
 }
 
 /*Карточки заметок*/
@@ -722,4 +723,175 @@ body.light-theme .modal-btn-cancel:hover {
 
 .note-card.drag-over {
     border-top: 2px solid #ff5500;
+}
+
+/* AUTH */
+
+.auth-container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.auth-card {
+    width: 400px;
+    background: #2a2a2a;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+
+.auth-card h1 {
+    color: white;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.auth-tabs {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.auth-tabs button {
+    flex: 1;
+    border: none;
+    background: transparent;
+    color: #888;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.active-tab {
+    color: white !important;
+    border-bottom: 2px solid #ff5500 !important;
+}
+
+.auth-card input {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 15px;
+    border: none;
+    border-radius: 8px;
+    background: #1f1f1f;
+    color: white;
+    outline: none;
+}
+
+.auth-card input:focus {
+    border: 1px solid #ff5500;
+}
+
+#authBtn {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+
+    background: #ff5500;
+    color: white;
+
+    font-size: 15px;
+    cursor: pointer;
+}
+
+#authBtn:hover {
+    background: #ff6a1a;
+}
+
+#authMessage {
+    color: #ff8888;
+    margin-top: 15px;
+    text-align: center;
+}
+
+/* PROFILE */
+
+.profile-wrapper {
+    position: relative;
+    margin-left: 20px;
+}
+
+.profile-btn {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: #ff5500;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-weight: bold;
+    color: white;
+    transition: 0.2s;
+}
+
+.profile-btn:hover {
+    transform: scale(1.05);
+}
+
+.profile-dropdown {
+    position: absolute;
+    top: 55px;
+    right: 0;
+    width: 240px;
+    background: #1f1f1f;
+    border: 1px solid #333;
+    border-radius: 14px;
+    padding: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    z-index: 100;
+}
+
+.profile-dropdown button {
+    width: 100%;
+    background: transparent;
+    border: none;
+    color: white;
+    text-align: left;
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.profile-dropdown button:hover {
+    background: #2a2a2a;
+}
+
+.profile-email {
+    color: #999;
+    font-size: 14px;
+    padding: 10px 12px;
+    border-bottom: 1px solid #333;
+    margin-bottom: 10px;
+}
+
+.hidden {
+    display: none;
+}
+
+/* AVATAR */
+
+.profile-avatar {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.avatar-upload {
+    display: block;
+    color: white;
+    text-align: left;
+    padding: 12px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: 0.2s;
+    margin-bottom: 10px;
+}
+
+.avatar-upload:hover {
+    background: #2a2a2a;
 }
