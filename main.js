@@ -1,5 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
-    
+    const isAuth = localStorage.getItem("isAuth");
+
+    if (!isAuth) {
+        window.location.href = "auth.html";
+    }
+
     //Закрытие и открытие бургер-меню
     const burger = document.getElementById("burger");
     const sidebar = document.getElementById("sidebar");
@@ -39,24 +44,144 @@ document.addEventListener("DOMContentLoaded", () => {
     const modalNoteText = document.getElementById("modalNoteText");
     
     let pendingDeleteId = null;
+    let draggedNoteId = null;
 
-    // Открытие
+    //Авторизация
+    const logoutBtns = document.querySelectorAll("#logoutBtn");
+
+    logoutBtns.forEach(btn => {
+        btn.addEventListener("click", () => {
+            localStorage.removeItem("isAuth");
+            window.location.href = "auth.html";
+        });
+    });
+
+    //Профиль
+    const profileWrapper = document.querySelector(".profile-wrapper");
+    const profileBtn = document.getElementById("profileBtn");
+    const profileDropdown = document.getElementById("profileDropdown");
+    const profileEmail = document.getElementById("profileEmail");
+    const profileLetter = document.getElementById("profileLetter");
+    const profileAvatar = document.getElementById("profileAvatar");
+    const avatarInput = document.getElementById("avatarInput");
+    const removeAvatarBtn = document.getElementById("removeAvatarBtn");
+    const openTrashBtn = document.getElementById("openTrashBtn");
+    const savedUser = JSON.parse(localStorage.getItem("user"));
+
+    if (savedUser) {
+        // email
+        profileEmail.textContent = savedUser.email;
+
+        // первая буква
+        profileLetter.textContent = savedUser.email[0].toUpperCase();
+    }
+
+    // Загрузка аватара
+    function loadAvatar() {
+        const savedAvatar = localStorage.getItem("profileAvatar");
+        if (savedAvatar) {
+            profileAvatar.src = savedAvatar;
+            profileAvatar.classList.remove("hidden");
+            profileLetter.classList.add("hidden");
+        } else {
+            profileAvatar.classList.add("hidden");
+            profileLetter.classList.remove("hidden");
+        }
+    }
+
+    // Загрузка фото
+    avatarInput.addEventListener("change", (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        // Проверка размера (макс 2MB)
+        if (file.size > 2 * 1024 * 1024) {
+            alert("Файл слишком большой. Максимальный размер: 2MB");
+            return;
+        }
+
+        // Проверка типа файла
+        if (!file.type.match(/image\/(png|jpg|jpeg|gif|webp)/)) {
+            alert("Поддерживаются только изображения: PNG, JPG, JPEG, GIF, WebP");
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            const imageData = event.target.result;
+            
+            // Создаем изображение для проверки размеров
+            const img = new Image();
+            img.onload = () => {
+                // Оптимизация размера если нужно (макс 300x300)
+                if (img.width > 300 || img.height > 300) {
+                    const canvas = document.createElement("canvas");
+                    const ctx = canvas.getContext("2d");
+                    
+                    const ratio = Math.min(300 / img.width, 300 / img.height);
+                    canvas.width = img.width * ratio;
+                    canvas.height = img.height * ratio;
+                    
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                    const optimizedData = canvas.toDataURL("image/jpeg", 0.8);
+                    
+                    localStorage.setItem("profileAvatar", optimizedData);
+                } else {
+                    localStorage.setItem("profileAvatar", imageData);
+                }
+                
+                loadAvatar();
+                profileDropdown.classList.add("hidden");
+            };
+            img.src = imageData;
+        };
+        reader.readAsDataURL(file);
+    });
+
+    // Удаление фото
+    removeAvatarBtn.addEventListener("click", () => {
+        localStorage.removeItem("profileAvatar");
+        loadAvatar();
+        profileDropdown.classList.add("hidden");
+    });
+
+    loadAvatar();
+
+    //Открытие / закрытие профиля
+    profileBtn.addEventListener("click", () => {
+        profileDropdown.classList.toggle("hidden");
+    });
+
+    //Закрытие профиля при клике вне меню
+    document.addEventListener("click", (e) => {
+        if (!profileWrapper.contains(e.target)) {
+            profileDropdown.classList.add("hidden");
+        }
+    });
+
+    //Кнопка корзины в профиле
+    openTrashBtn.addEventListener("click", () => {
+        notesScreen.style.display = "none";
+        trashScreen.style.display = "block";
+        renderTrash();
+        profileDropdown.classList.add("hidden");
+    });
+
+    // Открытие карточки заметки
     collapsed.addEventListener("click", () => {
         collapsed.style.display = "none";
         expanded.style.display = "flex";
     });
 
-    // Закрытие
+    // Закрытие карточки заметки
     closeBtn.addEventListener("click", () => {
         expanded.style.display = "none";
         collapsed.style.display = "block";
-
         clearInputs();
     });
 
     // Добавление заметки
     addBtn.addEventListener("click", () => {
-
         const title = titleInput.value.trim();
         const text = textInput.value.trim();
 
@@ -64,6 +189,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const note = {
             id: Date.now(),
+            order: Date.now(),
             title,
             text
         };
@@ -85,7 +211,6 @@ document.addEventListener("DOMContentLoaded", () => {
     searchInput.addEventListener("input", (e) => {
         const value = e.target.value;
         handleSearch(value);
-
         localStorage.setItem("search", value);
     });
 
@@ -137,6 +262,48 @@ document.addEventListener("DOMContentLoaded", () => {
         filtered.forEach(note => {
             const el = document.createElement("div");
             el.classList.add("note-card");
+            el.setAttribute("draggable", true);
+            el.dataset.id = note.id;
+
+            el.addEventListener("dragstart", () => {
+                draggedNoteId = note.id;
+                el.classList.add("dragging");
+            });
+
+            el.addEventListener("dragend", () => {
+                el.classList.remove("dragging");
+            });
+
+            el.addEventListener("dragover", (e) => {
+                e.preventDefault();
+                el.classList.add("drag-over");
+            });
+
+            el.addEventListener("dragleave", () => {
+                el.classList.remove("drag-over");
+            });
+
+            el.addEventListener("drop", () => {
+                el.classList.remove("drag-over");
+
+                const draggedIndex = notes.findIndex(n => n.id == draggedNoteId);
+                const targetIndex = notes.findIndex(n => n.id == note.id);
+
+                if (draggedIndex === -1 || targetIndex === -1) return;
+
+                const draggedItem = notes[draggedIndex];
+
+                notes.splice(draggedIndex, 1);
+                notes.splice(targetIndex, 0, draggedItem);
+
+                // обновляем order
+                notes.forEach((n, index) => {
+                    n.order = index;
+                });
+
+                saveToStorage();
+                renderNotes();
+            });
 
             const titleHtml = highlightText(note.title || "Без названия", filter);
             const textHtml = highlightText(note.text, filter);
@@ -178,10 +345,9 @@ document.addEventListener("DOMContentLoaded", () => {
         renderNotes();
     }
 
-    // удаление → в корзину
+    // удаление в корзину
     notesGrid.addEventListener("click", (e) => {
         if (e.target.classList.contains("delete-btn")) {
-
             const id = Number(e.target.dataset.id);
 
             if (isConfirmDeleteEnabled()) {
@@ -315,7 +481,7 @@ document.addEventListener("DOMContentLoaded", () => {
         showScreen(helpScreen);
     });
 
-    // ===== ЛОГИКА НАСТРОЕК =====
+    //ЛОГИКА НАСТРОЕК
     const detailsToggle = document.getElementById("detailsToggle");
     const confirmDeleteToggle = document.getElementById("confirmDeleteToggle");
 
