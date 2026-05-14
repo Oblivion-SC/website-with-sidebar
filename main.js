@@ -37,71 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const notesGrid = document.getElementById("notesGrid");
     const searchInput = document.getElementById("searchInput");
 
-    // Модальное окно подтверждения удаления
-    const confirmModal = document.getElementById("confirmModal");
-    const modalCancel = document.getElementById("modalCancel");
-    const modalConfirm = document.getElementById("modalConfirm");
-    const modalNoteText = document.getElementById("modalNoteText");
-    
-    let pendingDeleteId = null;
-    let draggedNoteId = null;
-
-    //Авторизация
-    const logoutBtn = document.getElementById("logoutBtn");
-
-    logoutBtn.addEventListener("click", () => {
-
-        localStorage.removeItem("isAuth");
-
-        window.location.href = "auth.html";
-    });
-
-    //Профиль
-    const profileWrapper = document.querySelector(".profile-wrapper");
-    const profileBtn = document.getElementById("profileBtn");
-    const profileDropdown = document.getElementById("profileDropdown");
-    const profileEmail = document.getElementById("profileEmail");
-    const openTrashBtn = document.getElementById("openTrashBtn");
-    const savedUser = JSON.parse(localStorage.getItem("user"));
-
-    if (savedUser) {
-
-        // email
-        profileEmail.textContent = savedUser.email;
-
-        // первая буква
-        profileLetter.textContent =
-            savedUser.email[0].toUpperCase();
-    }
-
-    //Открытие / закрытие профиля
-    profileBtn.addEventListener("click", () => {
-        profileDropdown.classList.toggle("hidden");
-    });
-
-    //Закрытие профиля при клике вне меню
-    document.addEventListener("click", (e) => {
-
-        if (
-            !profileWrapper.contains(e.target)
-        ) {
-            profileDropdown.classList.add("hidden");
-        }
-
-    });
-
-    //Кнопка корзины в профиле
-    openTrashBtn.addEventListener("click", () => {
-
-        notesScreen.style.display = "none";
-        trashScreen.style.display = "block";
-
-        renderTrash();
-
-        profileDropdown.classList.add("hidden");
-    });
-
-    // Открытие карточки заметки
+    // Открытие
     collapsed.addEventListener("click", () => {
         collapsed.style.display = "none";
         expanded.style.display = "flex";
@@ -111,13 +47,11 @@ document.addEventListener("DOMContentLoaded", () => {
     closeBtn.addEventListener("click", () => {
         expanded.style.display = "none";
         collapsed.style.display = "block";
-
         clearInputs();
     });
 
     // Добавление заметки
     addBtn.addEventListener("click", () => {
-
         const title = titleInput.value.trim();
         const text = textInput.value.trim();
 
@@ -147,7 +81,6 @@ document.addEventListener("DOMContentLoaded", () => {
     searchInput.addEventListener("input", (e) => {
         const value = e.target.value;
         handleSearch(value);
-
         localStorage.setItem("search", value);
     });
 
@@ -199,68 +132,12 @@ document.addEventListener("DOMContentLoaded", () => {
         filtered.forEach(note => {
             const el = document.createElement("div");
             el.classList.add("note-card");
-            el.setAttribute("draggable", true);
-            el.dataset.id = note.id;
 
-            el.addEventListener("dragstart", () => {
-                draggedNoteId = note.id;
-                el.classList.add("dragging");
-            });
-
-            el.addEventListener("dragend", () => {
-                el.classList.remove("dragging");
-            });
-
-            el.addEventListener("dragover", (e) => {
-                e.preventDefault();
-                el.classList.add("drag-over");
-            });
-
-            el.addEventListener("dragleave", () => {
-                el.classList.remove("drag-over");
-            });
-
-            el.addEventListener("drop", () => {
-
-                el.classList.remove("drag-over");
-
-                const draggedIndex = notes.findIndex(n => n.id == draggedNoteId);
-                const targetIndex = notes.findIndex(n => n.id == note.id);
-
-                if (draggedIndex === -1 || targetIndex === -1) return;
-
-                const draggedItem = notes[draggedIndex];
-
-                notes.splice(draggedIndex, 1);
-                notes.splice(targetIndex, 0, draggedItem);
-
-                // обновляем order
-                notes.forEach((n, index) => {
-                    n.order = index;
-                });
-
-                saveToStorage();
-                renderNotes();
-            });
-
-            const titleHtml = highlightText(note.title || "Без названия", filter);
-            const textHtml = highlightText(note.text, filter);
-
-            if (detailsEnabled) {
-                // Показываем текст полностью
-                el.innerHTML = `
-                    <h3>${titleHtml}</h3>
-                    <p class="note-text expanded">${textHtml}</p>
-                    <button class="delete-btn" data-id="${note.id}">Удалить</button>
-                `;
-            } else {
-                // Обрезаем текст до 3 строк
-                el.innerHTML = `
-                    <h3>${titleHtml}</h3>
-                    <p class="note-text truncated">${textHtml}</p>
-                    <button class="delete-btn" data-id="${note.id}">Удалить</button>
-                `;
-            }
+            el.innerHTML = `
+                <h3>${highlightText(note.title || "Без названия", filter)}</h3>
+                <p>${highlightText(note.text, filter)}</p>
+                <button class="delete-btn" data-id="${note.id}">Удалить</button>
+            `;
 
             notesGrid.appendChild(el);
         });
@@ -286,7 +163,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // удаление в корзину
     notesGrid.addEventListener("click", (e) => {
         if (e.target.classList.contains("delete-btn")) {
-
             const id = Number(e.target.dataset.id);
 
             if (isConfirmDeleteEnabled()) {
