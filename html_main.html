@@ -15,6 +15,31 @@
             <i class="fa-solid fa-magnifying-glass search-icon"></i>
             <input id="searchInput" class="search-header" type="text" placeholder="Search">
         </div>
+        
+        <!--Профиль с меню-->
+        <div class="profile-wrapper">
+
+            <div class="profile-btn" id="profileBtn">
+                <span id="profileLetter">F</span>
+                <img id="profileAvatar" class="profile-avatar hidden" src="" alt="Avatar">
+            </div>
+
+            <div class="profile-dropdown hidden" id="profileDropdown">
+
+                <div class="profile-email" id="profileEmail">user@mail.com</div>
+
+                <label class="avatar-upload" for="avatarInput">
+                    <i class="fa-solid fa-camera"></i> Изменить фото
+                </label>
+                <input type="file" id="avatarInput" accept="image/*" style="display:none;">
+                
+                <button id="removeAvatarBtn" class="remove-avatar-btn">Удалить фото</button>
+                <button id="openTrashBtn">Корзина</button>
+                <button id="logoutBtn">Выйти</button>
+
+            </div>
+
+        </div>
     </header>
 
     <!--Боковая панель-->
