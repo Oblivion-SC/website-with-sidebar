@@ -16,7 +16,7 @@ body{
     background-color: #1a1a1a;
     display: flex;
     align-items: center;
-    gap: 20px;
+    justify-content: space-between;
     padding:0 20px;
 }
 
@@ -60,13 +60,16 @@ body{
 
 .logo i {
     font-size: 24px;
+    color: #ffffff;
+    display: inline-block;
+    vertical-align: middle;
 }
 
 .search-wrapper {
     position: relative;
-    max-width: 60%;
-    width: 440px;
-    margin-left: 200px;
+    flex: 1;
+    max-width: 500px;
+    margin: 0 20px;
 }
 
 .search-icon {
@@ -810,7 +813,6 @@ body.light-theme .modal-btn-cancel:hover {
 
 .profile-wrapper {
     position: relative;
-    margin-left: 20px;
 }
 
 .profile-btn {
@@ -827,6 +829,8 @@ body.light-theme .modal-btn-cancel:hover {
     transition: 0.2s;
     overflow: hidden;
     position: relative;
+    border: 2px solid #ff5500;
+    box-shadow: 0 0 0 1px rgba(255,85,0,0.3);
 }
 
 .profile-btn:hover {
