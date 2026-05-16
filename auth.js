@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
             authBtn.textContent = "Зарегистрироваться";
             confirmPasswordInput.required = true;
         }
-        clearForm(); // ✅ Данные очищаются при переключении
+        clearForm(); // Данные очищаются при переключении
     }
 
     switchBtn.addEventListener("click", (e) => {
@@ -73,7 +73,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Состояние загрузки
         authBtn.disabled = true;
-        authBtn.textContent = "Загрузка...";
+        authBtn.textContent = "Вход...";
         authMessage.textContent = "";
 
         // Имитация запроса (600ms)
