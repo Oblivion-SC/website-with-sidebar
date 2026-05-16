@@ -1,0 +1,1474 @@
+/* ============================================
+   NOTES APP - STYLES (SoundCloud Theme)
+   Цветовая схема: официальная палитра SoundCloud [[9]]
+   ============================================ */
+
+/* ===== CSS VARIABLES для удобного управления цветами ===== */
+:root {
+    /* Primary colors - SoundCloud brand */
+    --sc-orange: #FF5500;           /* Основной акцентный цвет */
+    --sc-orange-hover: #E64D00;     /* Orange при наведении */
+    
+    /* Light theme colors */
+    --light-bg: #FAFAFA;            /* Фон страницы (светлый) */
+    --light-card: #FFFFFF;          /* Фон карточек */
+    --light-text-primary: #121212;  /* Основной текст */
+    --light-text-secondary: #565656;/* Вторичный текст */
+    --light-border: #CACACA;        /* Границы */
+    --light-hover: #F2F2F2;         /* Фон при наведении */
+    
+    /* Dark theme colors */
+    --dark-bg: #121212;             /* Фон страницы (тёмный) */
+    --dark-card: #272727;           /* Фон карточек */
+    --dark-text-primary: #FAFAFA;   /* Основной текст */
+    --dark-text-secondary: #A0A0A0; /* Вторичный текст */
+    --dark-border: #565656;         /* Границы */
+    --dark-hover: #333333;          /* Фон при наведении */
+    
+    /* UI elements */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.15);
+    
+    /* Transitions */
+    --transition-fast: 0.15s ease;
+    --transition-normal: 0.3s ease;
+}
+
+/* ===== Базовые стили ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--light-bg);
+    color: var(--light-text-primary);
+    transition: background-color var(--transition-normal), 
+                color var(--transition-normal);
+    line-height: 1.5;
+}
+
+/* ===== Тёмная тема ===== */
+body.dark-theme {
+    background-color: var(--dark-bg);
+    color: var(--dark-text-primary);
+}
+
+body.dark-theme .header,
+body.dark-theme .sidebar {
+    background-color: var(--dark-card);
+}
+
+/* ===== ШАПКА САЙТА ===== */
+.header {
+    height: 60px;
+    background-color: var(--dark-card); /* SoundCloud dark header */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: var(--shadow-sm);
+}
+
+/* ===== КНОПКА БУРГЕР-МЕНЮ ===== */
+#burger {
+    font-size: 22px;
+    background: none;
+    border: none;
+    color: var(--dark-text-primary);
+    cursor: pointer;
+    padding: 8px;
+    border-radius: var(--radius-sm);
+    transition: background-color var(--transition-fast);
+}
+
+#burger:hover {
+    background-color: var(--dark-hover);
+}
+
+/* ===== БОКОВАЯ ПАНЕЛЬ (SIDEBAR) ===== */
+.sidebar {
+    width: 250px;
+    background-color: var(--dark-card);
+    color: var(--dark-text-primary);
+    padding: 20px;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 60px; /* Отступ под хедер */
+    transition: transform var(--transition-normal) ease, 
+                width var(--transition-normal) ease;
+    z-index: 90;
+    overflow-y: auto;
+}
+
+.sidebar.closed {
+    transform: translateX(-100%);
+    width: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+/* ===== ЛОГОТИП ===== */
+.logo {
+    font-weight: 700;
+    font-size: 20px;
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: var(--sc-orange); /* SoundCloud orange для логотипа */
+    width: 100%;
+    text-align: center;
+}
+
+/* ===== ПОИСК В ХЕДЕРЕ ===== */
+.search-wrapper {
+    position: relative;
+    flex: 1;
+    max-width: 500px;
+    margin: 0 20px;
+}
+
+.search-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--dark-text-secondary);
+    font-size: 14px;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.search-header {
+    width: 100%;
+    padding: 12px 15px 12px 35px;
+    background-color: var(--dark-hover);
+    border: 1px solid transparent;
+    border-radius: var(--radius-md);
+    color: var(--dark-text-primary);
+    font-size: 14px;
+    outline: none;
+    transition: all var(--transition-fast);
+}
+
+.search-header::placeholder {
+    color: var(--dark-text-secondary);
+}
+
+.search-header:focus {
+    background-color: var(--dark-card);
+    border-color: var(--sc-orange);
+    box-shadow: 0 0 0 2px rgba(255, 85, 0, 0.2);
+}
+
+/* ===== МЕНЮ НАВИГАЦИИ ===== */
+.menu {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding-left: 0;
+    list-style: none;
+}
+
+.chapter {
+    display: block;
+    padding: 12px 15px;
+    margin: 0 0 2px 0;
+    text-decoration: none;
+    font-weight: 500;
+    color: var(--dark-text-primary);
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+    position: relative;
+    height: 44px;
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.chapter:hover {
+    background-color: var(--dark-hover);
+    color: var(--sc-orange);
+}
+
+.chapter.active {
+    color: var(--sc-orange);
+    background-color: rgba(255, 85, 0, 0.1);
+}
+
+/* Индикатор активного пункта */
+.active_indicator {
+    position: absolute;
+    left: -20px;
+    width: 4px;
+    height: 44px;
+    background-color: var(--sc-orange);
+    transition: transform var(--transition-normal) ease;
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    pointer-events: none;
+}
+
+/* ===== ОСНОВНОЙ КОНТЕНТ ===== */
+.main-content {
+    flex: 1;
+    padding: 20px;
+    margin-left: 250px; /* Отступ под sidebar */
+    transition: margin-left var(--transition-normal);
+}
+
+.sidebar.closed + .main-content {
+    margin-left: 0;
+}
+
+/* ===== СОЗДАНИЕ ЗАМЕТКИ ===== */
+.notes-creator {
+    width: 100%;
+    max-width: 700px;
+    margin: 40px auto;
+}
+
+/* ===== ПАНЕЛЬ ФОРМАТИРОВАНИЯ ТЕКСТА ===== */
+.formatting-toolbar {
+    display: flex;
+    gap: 4px;
+    padding: 8px;
+    background-color: var(--light-hover);
+    border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+    border-bottom: 1px solid var(--light-border);
+    flex-wrap: wrap;
+}
+
+body.dark-theme .formatting-toolbar {
+    background-color: var(--dark-hover);
+    border-bottom-color: var(--dark-border);
+}
+
+.formatting-toolbar button {
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--light-text-secondary);
+    padding: 6px 10px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all var(--transition-fast);
+    min-width: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+body.dark-theme .formatting-toolbar button {
+    color: var(--dark-text-secondary);
+}
+
+.formatting-toolbar button:hover {
+    background-color: var(--sc-orange);
+    color: white;
+    border-color: var(--sc-orange);
+}
+
+.formatting-toolbar button.active {
+    background-color: var(--sc-orange);
+    color: white;
+}
+
+.formatting-toolbar .divider {
+    width: 1px;
+    height: 20px;
+    background-color: var(--light-border);
+    margin: 0 4px;
+}
+
+body.dark-theme .formatting-toolbar .divider {
+    background-color: var(--dark-border);
+}
+
+/* Селектор стилей текста (H1, H2, P) */
+.format-style-select {
+    background: transparent;
+    border: 1px solid var(--light-border);
+    color: var(--light-text-primary);
+    padding: 6px 10px;
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    cursor: pointer;
+    min-width: 80px;
+}
+
+body.dark-theme .format-style-select {
+    border-color: var(--dark-border);
+    color: var(--dark-text-primary);
+    background-color: var(--dark-card);
+}
+
+.format-style-select:focus {
+    outline: none;
+    border-color: var(--sc-orange);
+}
+
+/* ===== ПОЛЕ ВВОДА ЗАМЕТКИ (с поддержкой форматирования) ===== */
+.note-collapsed,
+.note-collapsed-label {
+    background-color: var(--light-card);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    padding: 12px;
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto;
+    border: 1px solid var(--light-border);
+    transition: box-shadow var(--transition-fast);
+}
+
+.note-collapsed:hover,
+.note-collapsed-label:hover {
+    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+}
+
+body.dark-theme .note-collapsed,
+body.dark-theme .note-collapsed-label {
+    background-color: var(--dark-card);
+    border-color: var(--dark-border);
+}
+
+.note-collapsed input,
+.note-collapsed-label input {
+    border: none;
+    width: 100%;
+    outline: none;
+    font-size: 16px;
+    background-color: transparent;
+    color: var(--light-text-primary);
+    font-weight: 600;
+}
+
+body.dark-theme .note-collapsed input,
+body.dark-theme .note-collapsed-label input {
+    color: var(--dark-text-primary);
+}
+
+.note-collapsed input::placeholder,
+.note-collapsed-label input::placeholder {
+    color: var(--light-text-secondary);
+}
+
+/* Раскрытая заметка с редактором */
+.note-expanded,
+.note-expanded-label {
+    display: none;
+    flex-direction: column;
+    background: var(--light-card);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    padding: 15px;
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto;
+    border: 1px solid var(--light-border);
+}
+
+body.dark-theme .note-expanded,
+body.dark-theme .note-expanded-label {
+    background: var(--dark-card);
+    border-color: var(--dark-border);
+}
+
+.note-expanded input,
+.note-expanded-label input {
+    border: none;
+    font-size: 18px;
+    margin-bottom: 10px;
+    outline: none;
+    background-color: transparent;
+    color: var(--light-text-primary);
+    font-weight: 700;
+}
+
+body.dark-theme .note-expanded input,
+body.dark-theme .note-expanded-label input {
+    color: var(--dark-text-primary);
+}
+
+/* Редактируемая область текста с поддержкой форматирования */
+.note-textarea,
+.note-textarea-label {
+    border: none;
+    resize: vertical;
+    outline: none;
+    font-size: 15px;
+    background-color: transparent;
+    color: var(--light-text-primary);
+    min-height: 150px;
+    max-height: 400px;
+    line-height: 1.6;
+    font-family: inherit;
+}
+
+body.dark-theme .note-textarea,
+body.dark-theme .note-textarea-label {
+    color: var(--dark-text-primary);
+}
+
+.note-textarea::placeholder,
+.note-textarea-label::placeholder {
+    color: var(--light-text-secondary);
+}
+
+/* Стили для форматированного контента в режиме просмотра */
+.note-content h1 {
+    font-size: 1.5em;
+    font-weight: 700;
+    margin: 0.5em 0;
+    color: var(--light-text-primary);
+}
+
+.note-content h2 {
+    font-size: 1.25em;
+    font-weight: 600;
+    margin: 0.5em 0;
+    color: var(--light-text-primary);
+}
+
+.note-content h3 {
+    font-size: 1.1em;
+    font-weight: 600;
+    margin: 0.5em 0;
+    color: var(--light-text-primary);
+}
+
+.note-content p {
+    margin: 0.5em 0;
+    line-height: 1.6;
+}
+
+.note-content strong,
+.note-content b {
+    font-weight: 700;
+}
+
+.note-content em,
+.note-content i {
+    font-style: italic;
+}
+
+.note-content u {
+    text-decoration: underline;
+}
+
+.note-content s {
+    text-decoration: line-through;
+}
+
+.note-content code {
+    background-color: var(--light-hover);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: monospace;
+    font-size: 0.95em;
+}
+
+body.dark-theme .note-content code {
+    background-color: var(--dark-hover);
+}
+
+.note-content blockquote {
+    border-left: 3px solid var(--sc-orange);
+    margin: 1em 0;
+    padding: 0.5em 1em;
+    color: var(--light-text-secondary);
+    background-color: var(--light-hover);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+body.dark-theme .note-content blockquote {
+    background-color: var(--dark-hover);
+    color: var(--dark-text-secondary);
+}
+
+.note-content ul,
+.note-content ol {
+    margin: 0.5em 0;
+    padding-left: 1.5em;
+}
+
+.note-content li {
+    margin: 0.25em 0;
+}
+
+/* ===== АВТОРИЗАЦИЯ (GitHub Layout + SoundCloud Palette) ===== */
+.auth-container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background-color: #121212; /* SoundCloud Dark BG */
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 380px;
+    padding: 32px;
+    background: transparent;
+}
+
+.auth-logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 30px;
+}
+
+.auth-logo i {
+    font-size: 32px;
+    color: #ffffff;
+}
+
+.auth-logo h1 {
+    color: #ffffff;
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0;
+}
+
+.input-group {
+    margin-bottom: 16px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #FAFAFA;
+}
+
+.auth-card input {
+    width: 100%;
+    padding: 10px 12px;
+    background: #121212;
+    border: 1px solid #565656;
+    border-radius: 6px;
+    color: #FAFAFA;
+    font-size: 14px;
+    outline: none;
+    transition: none;
+}
+
+.auth-card input:focus {
+    border-color: #ffffff;
+}
+
+/* Белая кнопка с тёмным текстом */
+#authBtn {
+    width: 100%;
+    padding: 10px 16px;
+    background: #FFFFFF; /* Белый фон */
+    color: #1a1a1a; /* Тёмный текст */
+    border: none;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 8px;
+}
+
+#authBtn:hover {
+    color: rgb(160, 162, 166);
+
+}
+
+#authBtn:disabled {
+    background: #333333;
+    color: #ffffff;
+    cursor: not-allowed;
+    transition: none;
+}
+
+.auth-message {
+    margin-top: 12px;
+    text-align: center;
+    font-size: 13px;
+    min-height: 18px;
+    color: #ffffff;
+}
+
+.auth-message.success {
+    color: #ffffff;
+}
+
+/* Разделитель "или" */
+.auth-divider {
+    display: flex;
+    align-items: center;
+    margin: 24px 0;
+    color: #666;
+    font-size: 13px;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #333;
+}
+
+.auth-divider span {
+    padding: 0 12px;
+}
+
+/* Переключатель внизу - БЕЛЫЕ ССЫЛКИ */
+.auth-switcher {
+    text-align: center;
+    font-size: 14px;
+    color: #FFFFFF; /* Белый текст */
+}
+
+.auth-switcher a {
+    color: rgb(153,153,153); /* Белая ссылка */
+    text-decoration: none;
+    margin-left: 4px;
+    font-weight: 500;
+}
+
+.auth-switcher a:hover {
+    text-decoration: none;
+    color: #FFFFFF; /* Оранжевый при наведении */
+}
+
+#confirmPasswordGroup.hidden {
+    display: none;
+}
+
+/* ===== КНОПКИ ДЕЙСТВИЙ ===== */
+.note-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid var(--light-border);
+}
+
+body.dark-theme .note-actions {
+    border-top-color: var(--dark-border);
+}
+
+.note-actions button {
+    border: none;
+    padding: 8px 16px;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all var(--transition-fast);
+}
+
+/* Кнопка "Добавить" - оранжевая как у SoundCloud */
+#addNote,
+#addNoteLabel {
+    background: var(--sc-orange);
+    color: white;
+}
+
+#addNote:hover,
+#addNoteLabel:hover {
+    background: var(--sc-orange-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(255, 85, 0, 0.3);
+}
+
+/* Кнопка "Закрыть" - прозрачная */
+#closeNote,
+#closeNoteLabel {
+    background: transparent;
+    color: var(--light-text-secondary);
+}
+
+body.dark-theme #closeNote,
+body.dark-theme #closeNoteLabel {
+    color: var(--dark-text-secondary);
+}
+
+#closeNote:hover,
+#closeNoteLabel:hover {
+    color: var(--sc-orange);
+    background-color: var(--light-hover);
+}
+
+body.dark-theme #closeNote:hover,
+body.dark-theme #closeNoteLabel:hover {
+    background-color: var(--dark-hover);
+}
+
+/* ===== СЕТКА ЗАМЕТОК ===== */
+.notes-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.notes-grid {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+/* ===== КАРТОЧКА ЗАМЕТКИ ===== */
+.note-card {
+    background: var(--light-card);
+    color: var(--light-text-primary);
+    padding: 20px;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    cursor: pointer;
+    transition: transform var(--transition-fast), 
+                box-shadow var(--transition-fast),
+                border-color var(--transition-fast);
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--light-border);
+    position: relative;
+}
+
+.note-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--sc-orange);
+}
+
+body.dark-theme .note-card {
+    background: var(--dark-card);
+    color: var(--dark-text-primary);
+    border-color: var(--dark-border);
+}
+
+.note-card h3 {
+    margin-bottom: 10px;
+    font-size: 1.1em;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+.note-card .note-text {
+    flex: 1;
+    margin-bottom: 15px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--light-text-secondary);
+}
+
+body.dark-theme .note-card .note-text {
+    color: var(--dark-text-secondary);
+}
+
+/* Обрезанный текст для превью */
+.note-card .note-text.truncated {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.note-card .note-text.expanded {
+    display: block;
+}
+
+/* Ярлыки на карточке */
+.note-labels {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 12px;
+}
+
+.label-tag {
+    display: inline-block;
+    background: var(--sc-orange);
+    color: white;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.label-tag:hover {
+    background: var(--sc-orange-hover);
+    transform: scale(1.05);
+}
+
+/* ===== КНОПКИ В КАРТОЧКЕ ===== */
+.note-card-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: auto;
+    padding-top: 10px;
+    border-top: 1px solid var(--light-border);
+}
+
+body.dark-theme .note-card-actions {
+    border-top-color: var(--dark-border);
+}
+
+.delete-btn,
+.delete-btn-label {
+    background: transparent;
+    border: none;
+    color: var(--light-text-secondary);
+    cursor: pointer;
+    font-size: 13px;
+    padding: 6px 10px;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+}
+
+body.dark-theme .delete-btn,
+body.dark-theme .delete-btn-label {
+    color: var(--dark-text-secondary);
+}
+
+.delete-btn:hover,
+.delete-btn-label:hover {
+    color: #EC2E10; /* SoundCloud red для деструктивных действий */
+    background-color: rgba(236, 46, 16, 0.1);
+}
+
+.add-label-btn {
+    background: var(--sc-orange);
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: var(--radius-sm);
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.add-label-btn:hover {
+    background: var(--sc-orange-hover);
+}
+
+.remove-label-btn {
+    background: transparent;
+    border: 1px solid var(--light-border);
+    color: var(--light-text-secondary);
+    padding: 4px 10px;
+    border-radius: var(--radius-sm);
+    font-size: 11px;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+body.dark-theme .remove-label-btn {
+    border-color: var(--dark-border);
+    color: var(--dark-text-secondary);
+}
+
+.remove-label-btn:hover {
+    border-color: #EC2E10;
+    color: #EC2E10;
+}
+
+/* ===== КОРЗИНА ===== */
+.restore-btn {
+    background: transparent;
+    border: 1px solid #4CAF50;
+    color: #4CAF50;
+    padding: 6px 12px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-size: 13px;
+    transition: all var(--transition-fast);
+}
+
+.restore-btn:hover {
+    background: #4CAF50;
+    color: white;
+}
+
+.delete-forever-btn {
+    background: transparent;
+    border: 1px solid #EC2E10; /* SoundCloud red */
+    color: #EC2E10;
+    padding: 6px 12px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-size: 13px;
+    transition: all var(--transition-fast);
+}
+
+.delete-forever-btn:hover {
+    background: #EC2E10;
+    color: white;
+}
+
+/* ===== ПУСТОЕ СОСТОЯНИЕ ===== */
+.empty-state {
+    color: var(--light-text-secondary);
+    text-align: center;
+    grid-column: 1 / -1;
+    margin-top: 40px;
+    font-size: 16px;
+    padding: 40px;
+}
+
+body.dark-theme .empty-state {
+    color: var(--dark-text-secondary);
+}
+
+/* ===== ПОДСВЕТКА ПОИСКА ===== */
+.highlight {
+    background-color: var(--sc-orange);
+    color: white;
+    padding: 1px 4px;
+    border-radius: 3px;
+    font-weight: 500;
+}
+
+/* ===== НАСТРОЙКИ ===== */
+.settings-container {
+    max-width: 700px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+.settings-title {
+    color: var(--light-text-primary);
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+body.dark-theme .settings-title {
+    color: var(--dark-text-primary);
+}
+
+.settings-subtitle {
+    color: var(--light-text-primary);
+    font-size: 18px;
+    font-weight: 500;
+    margin: 20px 0 15px;
+}
+
+body.dark-theme .settings-subtitle {
+    color: var(--dark-text-primary);
+}
+
+.setting-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid var(--light-border);
+}
+
+body.dark-theme .setting-item {
+    border-bottom-color: var(--dark-border);
+}
+
+.setting-label {
+    font-size: 15px;
+    color: var(--light-text-primary);
+}
+
+body.dark-theme .setting-label {
+    color: var(--dark-text-primary);
+}
+
+.setting-status {
+    font-size: 13px;
+    color: var(--light-text-secondary);
+    margin-top: 4px;
+}
+
+body.dark-theme .setting-status {
+    color: var(--dark-text-secondary);
+}
+
+/* ===== TOGGLE SWITCH ===== */
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 44px;
+    height: 24px;
+}
+
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--light-border);
+    transition: var(--transition-normal);
+    border-radius: 24px;
+}
+
+.toggle-slider::before {
+    content: "";
+    position: absolute;
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: var(--transition-normal);
+    border-radius: 50%;
+}
+
+.toggle-switch input:checked + .toggle-slider {
+    background-color: var(--sc-orange);
+}
+
+.toggle-switch input:checked + .toggle-slider::before {
+    transform: translateX(20px);
+}
+
+/* ===== RADIO BUTTONS ===== */
+.setting-item input[type="radio"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--light-border);
+    border-radius: 50%;
+    outline: none;
+    cursor: pointer;
+    position: relative;
+    transition: var(--transition-fast);
+}
+
+.setting-item input[type="radio"]:checked {
+    border-color: var(--sc-orange);
+}
+
+.setting-item input[type="radio"]:checked::after {
+    content: "";
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 10px;
+    height: 10px;
+    background: var(--sc-orange);
+    border-radius: 50%;
+}
+
+/* ===== ССЫЛКИ В НАСТРОЙКАХ ===== */
+.setting-link {
+    color: var(--light-text-primary);
+    text-decoration: none;
+    font-size: 15px;
+    padding: 6px 0;
+    display: inline-block;
+    transition: color var(--transition-fast);
+}
+
+.setting-link:hover {
+    color: var(--sc-orange);
+}
+
+.about-section {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid var(--light-border);
+}
+
+body.dark-theme .about-section {
+    border-top-color: var(--dark-border);
+}
+
+.about-version {
+    font-size: 15px;
+    color: var(--light-text-primary);
+    margin-bottom: 5px;
+}
+
+.about-copyright {
+    font-size: 13px;
+    color: var(--light-text-secondary);
+}
+
+/* ===== МОДАЛЬНОЕ ОКНО ===== */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(18, 18, 18, 0.6); /* SoundCloud black with opacity */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    backdrop-filter: blur(4px);
+}
+
+.modal-content {
+    background: var(--light-card);
+    padding: 25px;
+    border-radius: var(--radius-lg);
+    min-width: 380px;
+    max-width: 450px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--light-border);
+}
+
+body.dark-theme .modal-content {
+    background: var(--dark-card);
+    border-color: var(--dark-border);
+}
+
+.modal-title {
+    color: var(--light-text-primary);
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+body.dark-theme .modal-title {
+    color: var(--dark-text-primary);
+}
+
+.modal-text {
+    color: var(--light-text-secondary);
+    font-size: 14px;
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+body.dark-theme .modal-text {
+    color: var(--dark-text-secondary);
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.modal-btn {
+    border: none;
+    padding: 10px 20px;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all var(--transition-fast);
+}
+
+.modal-btn-cancel {
+    background: transparent;
+    color: var(--light-text-secondary);
+    border: 1px solid var(--light-border);
+}
+
+body.dark-theme .modal-btn-cancel {
+    color: var(--dark-text-secondary);
+    border-color: var(--dark-border);
+}
+
+.modal-btn-cancel:hover {
+    color: var(--light-text-primary);
+    border-color: var(--light-text-primary);
+}
+
+.modal-btn-delete {
+    background: var(--sc-orange);
+    color: white;
+}
+
+.modal-btn-delete:hover {
+    background: var(--sc-orange-hover);
+}
+
+/* ===== ПРОФИЛЬ ПОЛЬЗОВАТЕЛЯ ===== */
+.profile-wrapper {
+    position: relative;
+}
+
+.profile-btn {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: var(--sc-orange);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-weight: 600;
+    color: white;
+    transition: transform var(--transition-fast);
+    overflow: hidden;
+    position: relative;
+    border: 2px solid var(--sc-orange);
+}
+
+.profile-btn:hover {
+    transform: scale(1.05);
+}
+
+.profile-avatar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.profile-dropdown {
+    position: absolute;
+    top: 55px;
+    right: 0;
+    width: 240px;
+    background: var(--dark-card);
+    border: 1px solid var(--dark-border);
+    border-radius: var(--radius-lg);
+    padding: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    z-index: 100;
+}
+
+.profile-email {
+    color: var(--dark-text-secondary);
+    font-size: 14px;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--dark-border);
+    margin-bottom: 5px;
+}
+
+.profile-dropdown button {
+    width: 100%;
+    background: transparent;
+    border: none;
+    color: var(--dark-text-primary);
+    text-align: left;
+    padding: 12px;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: background-color var(--transition-fast);
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.profile-dropdown button:hover {
+    background: var(--dark-hover);
+    color: var(--sc-orange);
+}
+
+.remove-avatar-btn {
+    color: #EC2E10 !important;
+}
+
+.remove-avatar-btn:hover {
+    background: rgba(236, 46, 16, 0.1) !important;
+}
+
+/* ===== ЯРЛЫКИ ===== */
+.labels-list {
+    margin-top: 20px;
+}
+
+.label-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--light-card);
+    padding: 12px 15px;
+    border-radius: var(--radius-md);
+    margin-bottom: 10px;
+    border: 1px solid var(--light-border);
+    transition: border-color var(--transition-fast);
+}
+
+.label-item:hover {
+    border-color: var(--sc-orange);
+}
+
+body.dark-theme .label-item {
+    background: var(--dark-card);
+    border-color: var(--dark-border);
+}
+
+.label-name {
+    color: var(--light-text-primary);
+    font-weight: 500;
+    cursor: pointer;
+    flex: 1;
+}
+
+body.dark-theme .label-name {
+    color: var(--dark-text-primary);
+}
+
+.label-name:hover {
+    color: var(--sc-orange);
+}
+
+.delete-label-btn {
+    background: transparent;
+    border: none;
+    color: #EC2E10;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 6px 10px;
+    border-radius: var(--radius-sm);
+    transition: background-color var(--transition-fast);
+}
+
+.delete-label-btn:hover {
+    background: rgba(236, 46, 16, 0.1);
+}
+
+.labels-add-section {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.label-input {
+    flex: 1;
+    background: var(--light-card);
+    border: 1px solid var(--light-border);
+    padding: 10px 15px;
+    border-radius: var(--radius-md);
+    color: var(--light-text-primary);
+    outline: none;
+    transition: border-color var(--transition-fast);
+}
+
+.label-input:focus {
+    border-color: var(--sc-orange);
+}
+
+body.dark-theme .label-input {
+    background: var(--dark-card);
+    border-color: var(--dark-border);
+    color: var(--dark-text-primary);
+}
+
+.label-create-btn {
+    background: var(--sc-orange);
+    border: none;
+    padding: 10px 20px;
+    border-radius: var(--radius-md);
+    color: white;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color var(--transition-fast);
+}
+
+.label-create-btn:hover {
+    background: var(--sc-orange-hover);
+}
+
+/* ===== DRAG & DROP ВИЗУАЛИЗАЦИЯ ===== */
+.note-card.dragging {
+    opacity: 0.6;
+    transform: scale(1.02);
+    border: 2px dashed var(--sc-orange);
+    box-shadow: 0 8px 25px rgba(255, 85, 0, 0.2);
+}
+
+.note-card.drag-over {
+    border-top: 3px solid var(--sc-orange);
+}
+
+/* ===== АДАПТИВНОСТЬ ===== */
+@media (max-width: 768px) {
+    .sidebar {
+        z-index: 95;
+    }
+    
+    .main-content {
+        margin-left: 0;
+    }
+    
+    .notes-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .notes-creator,
+    .note-collapsed,
+    .note-expanded {
+        width: 100%;
+        max-width: 100%;
+    }
+    
+    .formatting-toolbar {
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        padding-bottom: 4px;
+    }
+    
+    .formatting-toolbar::-webkit-scrollbar {
+        height: 4px;
+    }
+    
+    .formatting-toolbar::-webkit-scrollbar-thumb {
+        background: var(--sc-orange);
+        border-radius: 2px;
+    }
+}
+
+/* ===== УТИЛИТЫ ===== */
+.hidden {
+    display: none !important;
+}
+
+/* Скрытие скроллбара для чистого вида */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--light-border);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--sc-orange);
+}
+
+body.dark-theme ::-webkit-scrollbar-thumb {
+    background: var(--dark-border);
+}
+
+body.dark-theme ::-webkit-scrollbar-thumb:hover {
+    background: var(--sc-orange);
+}
